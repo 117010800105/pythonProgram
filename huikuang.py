@@ -1,7 +1,7 @@
 import turtle
 import time
 length = 400
-r=0.9
+r=0.95
 turtle.setup(500,500,200,200)
 turtle.penup()
 turtle.goto(-200,-200)
