@@ -4,22 +4,26 @@ import re
 
 
 def getTestpaper(pageUrl, destUrl):
-    text = getHTMLText(pageUrl)
+    text = getHTMLText(pageUrl,'gbk')
     while True:
         soup = BeautifulSoup(text, "html.parser")
         item = soup.find_all('img', {'alt': re.compile('华杯赛')})
+        if len(item) < 1:
+            item = soup.find_all('img',{'alt':""})
         src = item[0].attrs['src']
-        downloadImageFile(src, destUrl)
+        title = soup.find('title')
+        downloadImageFile(src, destUrl,title.string+'.jpg')
 
         nextpage = soup.find('a', string='下一页')
         url = nextpage.attrs['href']
         if url.endswith('shtml'):
-            text = getHTMLText(nextpage.attrs['href'])
+            text = getHTMLText(nextpage.attrs['href'],'gbk')
+            print(nextpage.attrs['href'])
         else:
             break
 
 def getHuabeiPaper(pageUrl, destUrl):
-    text = getHTMLText(pageUrl)
+    text = getHTMLText(pageUrl,'gbk')
     soup = BeautifulSoup(text,"html.parser")
     tr_items = soup.find_all('tr')
     for tr in tr_items:
@@ -40,7 +44,7 @@ def getHuabeiPaper(pageUrl, destUrl):
 
 
 def getHuabeiPapers(destUrl):
-    text = getHTMLText('http://www.aoshu.com/e/20160906/57ce56f736156.shtml')
+    text = getHTMLText('http://www.aoshu.com/e/20160906/57ce56f736156.shtml','gbk')
     soup = BeautifulSoup(text, "html.parser")
     item = soup.find_all('u')
     for ut in item:
