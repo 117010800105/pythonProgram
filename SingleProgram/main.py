@@ -1,4 +1,5 @@
 from CrawAoshu import *
-#getTestpaper('http://www.aoshu.com/e/20161109/5822b713ef8d2.shtml','f:/xiaoshengchu')
+#getTestpaper('http://www.aoshu.com/e/20160928/57eb6ae6bfbb8.shtml','f:/xiaoshengchu/shuxue')
 #getYuwenPapers('f:/xiaoshengchu/yuwen')
-getHuabeiPapers('h:/huabei')
+getHuabeiPapers('f:/xiaoshengchu/shuxue')
+
