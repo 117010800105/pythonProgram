@@ -1,4 +1,4 @@
-'''
+
 import itchat
 itchat.login()
 friends=itchat.get_friends(update=True)[0:]
@@ -57,41 +57,40 @@ text = "".join(siglist)
 #fout = open('friends.txt','wb')
 #pickle.dump(text,fout)
 #fout.close()
-'''
+
 import pickle
-fr = open('alice.txt','rb')
-text = pickle.load(fr)
-fr.close()
+#fr = open('friends.txt','rb')
+#text = pickle.load(fr)
+#fr.close()
 
 import jieba
 wlist = jieba.cut(text, cut_all = True)
-word_space_split = "".join(wlist)
+counts = {}
+for word in wlist:
+    if len(word ) == 1:
+        continue
+    else:
+        counts[word] = counts.get(word,0) + 1
+
 
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud,STOPWORDS, ImageColorGenerator
+from wordcloud import WordCloud, ImageColorGenerator
 import numpy as np
 import PIL.Image as Image
 coloring = np.array(Image.open("f:/22.jpg"))
-stopwords = set(STOPWORDS)
 wc = WordCloud(background_color="white",
                          max_words=2000,
                          mask=coloring,
                          max_font_size=60,
                          random_state=42,
                          scale=2,
-                         stopwords=stopwords,
                          font_path="c:/Windows/Fonts/SimHei.ttf")
-wc.generate(word_space_split)
+wc.generate_from_frequencies(counts)
 image_colors = ImageColorGenerator(coloring)
 
-plt.imshow(wc, interpolation="bilinear")
+plt.imshow(wc)
 plt.axis("off")
 plt.figure()
-plt.imshow(wc.recolor(color_func=image_colors), interpolation="bilinear")
-plt.axis("off")
-plt.figure()
-plt.imshow(coloring, cmap=plt.cm.gray, interpolation="bilinear")
-plt.axis("off")
 plt.show()
 
 
