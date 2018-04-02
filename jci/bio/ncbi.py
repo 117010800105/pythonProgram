@@ -16,7 +16,9 @@ blosum = sio.loadmat('blosum.mat')
 blosumMatrix = blosum['blosum62']
 alphabet = 'ARNDCQEGHILKMFPSTWYVBZX*'
 
-def getPSSMFiles(fastafile,outfileprefix,dbName='swissprot'):
+# generate the PSSM file of each protein in fastafile by psi-blast
+def getPSSMFiles(fastafile,outfileprefix='',dbName='swissprot'):
+    
     inputfile = 'input.fasta'
     
     for seq_record in SeqIO.parse(fastafile, 'fasta'):
@@ -56,7 +58,8 @@ def getPSSMFiles(fastafile,outfileprefix,dbName='swissprot'):
                         col += 1
                     line = line + '\n'
                     pw.writelines(line)
-            
+
+# save each PSSM file as CSV file format. Each element is string          
 def savePSSMFile2CSV(pssmfilesdir, csvfilesdir):
     listfile = os.listdir(pssmfilesdir)
     for eachfile in listfile:
@@ -79,4 +82,37 @@ def savePSSMFile2CSV(pssmfilesdir, csvfilesdir):
         with open(csvfilesdir + '/' + filename[0] + '.csv', 'w') as csvfile:
             cfw = csv.writer( csvfile)
             cfw.writerows(pssm)
+
+# read numeric matrix from csv file            
+def readPSSMFromCSVFile(filename):
+    pssm=[]
+    with open( filename, 'r') as csvfile:
+        cfr = csv.reader(csvfile)
+        for row in cfr:
+            r = []
+            for m in row:
+                r.append(eval(m))
+            pssm.append(r)
+    return pssm
+
+#  get a dict pssm   
+def getPSSMMatFileFromFastafile( dirname, fastafile, matfilename, dbName='swissprot'):
+    # generate the PSSM file of each protein in fastafile by psi-blast
+    #getPSSMFiles(fastafile,dbName)
     
+    # save each PSSM file as CSV file format. Each element is string
+    #savePSSMFile2CSV(dirname, dirname)
+    
+    # geerate PSSM 
+    pssm = {}    
+    listf = os.listdir(dirname)
+    for file in listf:
+        #If file is csv format
+        filename = file.split('.')
+        if 'csv' in file:
+            p=readPSSMFromCSVFile(dirname + '/' + file)
+            pssm[filename[0]] = p
+    
+                               
+    # save to mat file
+    sio.savemat(matfilename, pssm)
