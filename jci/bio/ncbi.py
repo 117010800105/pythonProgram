@@ -98,10 +98,10 @@ def readPSSMFromCSVFile(filename):
 #  get a dict pssm   
 def getPSSMMatFileFromFastafile( dirname, fastafile, matfilename, dbName='swissprot'):
     # generate the PSSM file of each protein in fastafile by psi-blast
-    #getPSSMFiles(fastafile,dbName)
+    getPSSMFiles(fastafile,dbName)
     
     # save each PSSM file as CSV file format. Each element is string
-    #savePSSMFile2CSV(dirname, dirname)
+    savePSSMFile2CSV(dirname, dirname)
     
     # geerate PSSM 
     pssm = {}    
