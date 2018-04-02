@@ -1,6 +1,6 @@
-.idea
--pycache_
-jci/bio/_pycache_
-TextbookExercise/.ipynb_checkpoints
-SingleProgram/_pycache_
-SingleProgram/.idea
+.idea/
+-pycache_/
+jci/bio/_pycache_/
+TextbookExercise/.ipynb_checkpoints/
+SingleProgram/_pycache_/
+SingleProgram/.idea/
