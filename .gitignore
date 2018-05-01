@@ -1,7 +1,17 @@
-.idea/
+#PyCharm files
 __pycache__/
+.idea/
+
+#jupyter notebook files
+.ipynb_checkpoints/
+
+# dir: jci/bio/
 jci/bio/__pycache__
+
+# dir: TextbookExercise/
 TextbookExercise/.ipynb_checkpoints/
 TextbookExercise/.idea/
+
+# dir: SingleProgram/
 SingleProgram/__pycache__/
 SingleProgram/.idea/
