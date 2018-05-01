@@ -2,5 +2,6 @@
 __pycache__/
 jci/bio/__pycache__
 TextbookExercise/.ipynb_checkpoints/
+TextbookExercise/.idea/
 SingleProgram/__pycache__/
 SingleProgram/.idea/
