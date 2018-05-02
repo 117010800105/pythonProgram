@@ -11,6 +11,8 @@ jci/bio/__pycache__
 # dir: TextbookExercise/
 TextbookExercise/.ipynb_checkpoints/
 TextbookExercise/.idea/
+TextbookExercise/*.txt
+TextbookExercise/novelStyleStas.py
 
 # dir: SingleProgram/
 SingleProgram/__pycache__/
