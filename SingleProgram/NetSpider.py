@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-def getHTMLText(url,coding):
+def getHTMLText(url,coding='gbk'):
     try:
         r = requests.get(url,timeout=30)
         print(r)
