@@ -23,5 +23,5 @@ page = 'https://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl
        '&fr=&sf=1&fmq=1494981920766_R&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2' \
        '&ie=utf-8&word=%E5%BC%A0%E9%A6%A8%E4%BA%88&f=3&oq=zhang&rsp=2'
 html= getHTMLText(page,'utf-8')
-download(getImg(html),'f:/360Downloads/baidupic')
+download(getImg(html),'e:/360Downloads/baidupic')
 
