@@ -1,0 +1,42 @@
+1528202687778	geckodriver	INFO	geckodriver 0.20.1
+1528202687793	geckodriver	INFO	Listening on 127.0.0.1:63525
+1528202690824	mozrunner::runner	INFO	Running command: "e:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\falcon1\\AppData\\Local\\Temp\\rust_mozprofile.DrWarVts3R3o"
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+1528202695976	Marionette	INFO	Listening on port 63537
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+1528202697152	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Parent 17424, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 23760, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 23760, Chrom[Child 23556, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 23556, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 17424, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 22564, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 22564, C*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1528202763565	geckodriver	INFO	geckodriver 0.20.1
+1528202763581	geckodriver	INFO	Listening on 127.0.0.1:63714
+1528202766658	mozrunner::runner	INFO	Running command: "e:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\falcon1\\AppData\\Local\\Temp\\rust_mozprofile.qPRResQLTU0x"
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+1528202769753	Marionette	INFO	Listening on port 63724
+1528202769979	Marionette	WARN	TLS certificate errors will be ignored for this session
+Unable to read VR Path Registry from C:\Users\falcon1\AppData\Local\openvr\openvrpaths.vrpath
+[Parent 22644, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 24228, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 24228, Chrome_ChildThread] WARNING: pipe error: 10[Child 23956, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x540027,name=PNecko::Msg_RemoveRequestContext) Channel closing: too late to send/recv, messages will be lost
+
+[Child 23956, Chrome_ChildThread] WARNING:[Parent 22644, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 20788, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 20788, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/bu*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
