@@ -1,5 +1,5 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 import requests
 import time
 def getHTMLText(url,coding='gbk'):
@@ -34,21 +34,3 @@ def downloadImageFile(imgUrl, destUrl, fname=''):
         return r.status_code
 
 
-def getHTMLTextByHeadless(url):
-    browser = webdriver.Firefox()
-    browser.get(url)
-    text = browser.page_source
-    browser.quit()
-    return text
-
-url = 'https://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&'\
-    'cl=2&lm=-1&st=-1&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&'\
-    'face=0&istype=2&ie=utf-8&fm=index&pos=history&word=%E6%9D%A8%E5%B9%82'
-#text = getHTMLText(url)
-#print(text)
-
-phantomjs_path = 'E:\\Program Files\\Python\\Python36-32\\Scripts'
-pageSource = getHTMLTextByHeadless(url)
-pageSource.encode(encoding='utf-8')
-with open('e:/source.txt','w') as fr:
-    fr.write(pageSource)
