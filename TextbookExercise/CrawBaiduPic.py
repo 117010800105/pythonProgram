@@ -1,11 +1,13 @@
 from NetSpider import *
-from bs4 import BeautifulSoup
+import json
 import re
 
 def getImg(html):
-    imgre = re.compile('"objURL":"(.*?)"')
+    #imgre = re.compile('"objURL":"(.*?)"')
+    imgre = re.compile('"thumbURL":"(.*?)"')
     imglist = re.findall(imgre,html)
     return imglist
+
 def download(urls,path):
     index = 1
     for url in urls:
@@ -20,6 +22,6 @@ def download(urls,path):
         index += 1
 
 page = 'https://image.baidu.com/search/index?tn=baiduimage&word=范冰冰'
-html= getHTMLText(page,'utf-8')
-download(getImg(html),'e:/360Downloads/baidupic')
+html= getHTMLText(page)
+download(getImg(html), 'e:/baidupic')
 

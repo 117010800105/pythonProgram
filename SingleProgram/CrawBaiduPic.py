@@ -2,7 +2,7 @@ from NetSpider import *
 from bs4 import BeautifulSoup
 import re
 
-def getBaiduPic(url, desurl):
+def getBaiduPicBtHeadless(url, desurl):
     browser = webdriver.Firefox()
     browser.get(url)
     lis = browser.find_elements(By.CLASS_NAME, "imgitem")
@@ -11,9 +11,10 @@ def getBaiduPic(url, desurl):
         downloadImageFile(li.get_attribute('data-objurl'), desurl)
     browser.quit()
 
+
 def getMorePages(kw, pages):
     params = []
-    for i in range(30,30*pages+30,30):
+    for i in range(30, 30*pages+30, 30):
         params.append({
                           'ipn': 'rj',
                           'ct': 201326592,
@@ -39,24 +40,30 @@ def getMorePages(kw, pages):
                           'qc': '',
                           'nc': 1,
                           'fr': '',
-                          'pn': pages,
+                          'pn': i,
                           'rn': 30,
                           'gsm': '1e',
                           '1528253616462': ''
                       })
     url = 'https://image.baidu.com/search/acjson?tn=resultjson_com'
-    urls = []
-    for param in params:
-        for key in param.keys():
-            url = url + '&' + key + '=' + str(param[key])
-        urls.append(url)
+    datalist = []
 
-    return urls
+    for param in params:
+        dj = requests.get(url, params=param).json()
+        data = dj['data']
+        if data is not None and len(data) > 0:
+            datalist.append(data)
+    return datalist
 
 
 def main(kw, pages, desurl):
-    urls = getMorePages(kw, pages)
-    for url in urls:
-        getBaiduPic(url,desurl)
+    datalist = getMorePages(kw, pages)
+    index = 1
+    for data in datalist:
+        for i in data:
+            if i.get('thumbURL') is not None:
+                ir = i.get('thumbURL')
+                downloadImageFile(ir, desurl, str(index)+'.jpg')
+                index = index + 1
 
-main('杨幂',10, 'e:/baidupic')
+main('范冰冰',3, 'e:/baidupic')

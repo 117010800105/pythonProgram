@@ -1,7 +1,7 @@
 import requests
 import re
 from bs4 import BeautifulSoup
-allUniv=[]
+
 def getHTMLText(url):
     send_headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36",
@@ -17,33 +17,38 @@ def getHTMLText(url):
     except:
         return ""
 
-def fillUnivList(soup):
+def fillUnivList(soup, allUniv):
     data = soup.find_all('div',{'class':re.compile('shadow-dark')})
     for div in data:
         singleUniv = []
         div1 = div.find('div',{'style':'margin-left: 2.5rem;'})
         rank = div1.get_text().strip()
-
         singleUniv.append(rank.split(' ')[0])
-        div2 = div.find('div',{'class':'block-normal text-small'})
-        singleUniv.append(div2.string.strip())
+
+        h3 = div.find('h3')
+        singleUniv.append(h3.get_text().strip())
+
         ldiv = div.find_all('div',{'style':'padding-right: 0.5rem;'})
         singleUniv.append(ldiv[0].strong.string)
         singleUniv.append(ldiv[1].strong.string)
         allUniv.append(singleUniv)
 
-def printUnivList():
+def printUnivList(allUniv):
     print("{:<6}{:<20}{:<6}{:<10}".format("排名","学校名称","学费","培养规模"))
     for u in allUniv:
         print("{:<6}{:<20}{:<10}{:<10}".format(u[0],u[1],u[2],u[3]))
 
 
-def main():
+def main(num):
+    allUniv = []
     url = 'https://www.usnews.com/best-colleges/rankings/national-universities'
-    html = getHTMLText(url)
-    soup = BeautifulSoup(html,'html.parser')
-    fillUnivList(soup)
-    printUnivList()
+
+    for i in range(1, num+1):
+        ri = url + '?_page=' + str(i)
+        html = getHTMLText(ri)
+        soup = BeautifulSoup(html, 'html.parser')
+        fillUnivList(soup, allUniv)
+    printUnivList(allUniv)
 
 
-main()
+main(4)
