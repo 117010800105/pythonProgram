@@ -20,20 +20,22 @@ def gameOver(a,b):
     return a==11 or b==11
 def simOneGame(probA, probB):
     scoreA, scoreB = 0, 0
-    serving = "A"
+    serving = 0
+    t = 0
     while not gameOver(scoreA, scoreB):
-        if serving == "A":
+        if serving == 0:
             if random() < probA:
                 scoreA += 1
             else:
                 scoreB += 1
-                serving="B"
         else:
             if random() < probB:
                 scoreB += 1
             else:
                 scoreA += 1
-                serving="A"
+        t = t + 1
+        if t%2 == 0:
+            serving = (serving + 1)%2
     return scoreA, scoreB
 def printSummary(winsA, winsB):
     n = winsA + winsB

@@ -24,14 +24,13 @@ def gameOver(t):
 def simOneGame(goleA, boardA, goleB, boardB):
     scoreA, scoreB = 0, 0
     serving = 0 #0: 代表A队发球，1：代表B队发球
-    totalTime, r = 0, 24
+    totalTime = 0
     while not gameOver(totalTime):
-        if r > 24 or r == 0:
+        t = randint(1, 24)
+        totalTime += t
+        if t == 24:
             serving = (serving + 1)%2
-            r = 24
         else:
-            t = randint(1, r)
-            totalTime += t
             if serving == 0:
                 if random() < goleA:
                     scoreA += 1
@@ -39,10 +38,8 @@ def simOneGame(goleA, boardA, goleB, boardB):
                 else:
                     if random() < boardA:
                         serving=0
-                        r -= t
                     else:
                         serving = 1
-                        r -= t
             else:
                 if random() < goleB:
                     scoreB += 1
@@ -50,10 +47,8 @@ def simOneGame(goleA, boardA, goleB, boardB):
                 else:
                     if random() < boardB:
                         serving = 1
-                        r -= t
                     else:
                         serving=0
-                        r -= t
     return scoreA, scoreB
 def printSummary(winsA, winsB):
     n = winsA + winsB
