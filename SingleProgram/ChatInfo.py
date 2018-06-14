@@ -1,6 +1,8 @@
 
 import itchat
-
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
 #登录朋友圈
 def login():
     itchat.login()
@@ -37,9 +39,6 @@ def analyseGender(friends):
     print('不明性别好友：{:.2f}%%'.format( othercol))
 
     #plot code
-    import numpy as np
-    import matplotlib.pyplot as plt
-    import matplotlib as mpl
     mpl.rcParams['font.sans-serif']=['SimHei']
     mpl.rcParams['axes.unicode_minus'] = False
 
@@ -82,7 +81,49 @@ def analyseGender(friends):
     plt.show()
 
 def analyseProvince(friends):
-    
+
+    provlist = get_var('Province', friends)
+    provdict = {}
+    for p in provlist:
+        provdict[p] = provdict.get(p,0) + 1
+    provdict = sorted(provdict.items(), key= lambda x : x[1], reverse=True)
+
+    #画图
+    figpro = plt.figure(figsize=(10,5))
+    axpro = figpro.add_subplot(111)
+    axpro.set_title('省份')
+    xticks = np.linspace(0.5,20,20)
+    bar_width = 0.8
+    pros= []
+    values = []
+    count = 0
+    for d in provdict:
+        pros.append(d[0])
+        values.append(d[1])
+        count += 1
+        if count >= 20:
+            break
+
+    colors = ['#FFEC88', '#FFE4C4','#FFC125','#FFB6C1','#CDCDB4','#CDC8B1','#CDB79E','#CDAD00','#CD96CD',\
+              '#CD853F','#C1FFC1','#C0FF3E','#BEBEBE','#CD5C5C','#CD3700','#CD2626','#8B8970','#8B6914',\
+              '#8B5F65','#8B2252']
+    bars = axpro.bar( xticks, values, width=bar_width, edgecolor='none')
+    axpro.set_ylabel('人数')
+    axpro.set_xlabel('省份')
+    axpro.grid()
+    axpro.set_xticks( xticks)
+    axpro.set_xticklabels(pros)
+    axpro.set_xlim(0,20)
+    axpro.set_ylim([0,100])
+
+    for bar, color in zip( bars, colors):
+        bar.set_color(color)
+        height = bar.get_height()
+        plt.text( bar.get_x()+bar.get_width()/4., height, '{}'.format(height))
+
+    plt.show()
+
+
 """
 NickName = get_var("NickName")
 Sex = get_var("Sex")
@@ -150,7 +191,7 @@ plt.show()
 def main():
     friends = login()
     analyseGender(friends)
-    #analyseProvince(friends)
+    analyseProvince(friends)
     #analyseSingure(friends)
 
 main()
