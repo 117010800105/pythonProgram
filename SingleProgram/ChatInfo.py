@@ -3,6 +3,11 @@ import itchat
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import re
+import jieba
+import PIL.Image as Image
+from wordcloud import WordCloud, ImageColorGenerator
+
 #登录朋友圈
 def login():
     itchat.login()
@@ -92,7 +97,7 @@ def analyseProvince(friends):
     figpro = plt.figure(figsize=(10,5))
     axpro = figpro.add_subplot(111)
     axpro.set_title('省份')
-    xticks = np.linspace(0.5,20,20)
+    xticks = np.linspace(0.5,20,10)
     bar_width = 0.8
     pros= []
     values = []
@@ -101,12 +106,11 @@ def analyseProvince(friends):
         pros.append(d[0])
         values.append(d[1])
         count += 1
-        if count >= 20:
+        if count >= 10:
             break
 
     colors = ['#FFEC88', '#FFE4C4','#FFC125','#FFB6C1','#CDCDB4','#CDC8B1','#CDB79E','#CDAD00','#CD96CD',\
-              '#CD853F','#C1FFC1','#C0FF3E','#BEBEBE','#CD5C5C','#CD3700','#CD2626','#8B8970','#8B6914',\
-              '#8B5F65','#8B2252']
+              '#CD853F']
     bars = axpro.bar( xticks, values, width=bar_width, edgecolor='none')
     axpro.set_ylabel('人数')
     axpro.set_xlabel('省份')
@@ -124,74 +128,52 @@ def analyseProvince(friends):
     plt.show()
 
 
-"""
-NickName = get_var("NickName")
-Sex = get_var("Sex")
-Province = get_var("Province")
-City = get_var("City")
-Signature = get_var("Signature")
+def drawWordcloudPlot(counts):
+    coloring = np.array(Image.open("E:/baidupic/alice_color.png"))
+    wc = WordCloud(background_color="white",
+                   max_words=2000,
+                   mask=coloring,
+                   max_font_size=60,
+                   random_state=42,
+                   scale=2,
+                   font_path="c:/Windows/Fonts/SimHei.ttf")
+    wc.generate_from_frequencies(counts)
+    image_colors = ImageColorGenerator(coloring)
 
-from pandas import DataFrame
-data = {'NickName': NickName, 'Sex': Sex, 'Province': Province, 'City': City, 'Signature': Signature}
-frame = DataFrame(data)
-frame.to_csv('data.csv',index=True)
-
-#plot code
-#朋友圈个性签名词云图
-import re
-siglist =[]
-for i in friends:
-    signature = i["Signature"].strip().replace("span","").replace("class","").replace("emoji","")
-    rep = re.compile("1f\d+\w*|[<>/=]")
-    signature = rep.sub("",signature)
-    siglist.append(signature)
-text = "".join(siglist)
-
-#第一次运行时将朋友圈内容存入文件
-
-#fout = open('friends.txt','wb')
-#pickle.dump(text,fout)
-#fout.close()
-
-import pickle
-#fr = open('friends.txt','rb')
-#text = pickle.load(fr)
-#fr.close()
-
-import jieba
-wlist = jieba.cut(text, cut_all = True)
-counts = {}
-for word in wlist:
-    if len(word ) == 1:
-        continue
-    else:
-        counts[word] = counts.get(word,0) + 1
+    plt.imshow(wc)
+    plt.axis("off")
+    plt.savefig('friendSign.jpg')
+    plt.show()
 
 
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud, ImageColorGenerator
-import numpy as np
-import PIL.Image as Image
-coloring = np.array(Image.open("f:/22.jpg"))
-wc = WordCloud(background_color="white",
-                         max_words=2000,
-                         mask=coloring,
-                         max_font_size=60,
-                         random_state=42,
-                         scale=2,
-                         font_path="c:/Windows/Fonts/SimHei.ttf")
-wc.generate_from_frequencies(counts)
-image_colors = ImageColorGenerator(coloring)
+def analyseSignature(friends):
+    signatures = get_var('Signature', friends)
+    siglist = []
+    for sign in signatures:
+        sign = sign.strip().replace("span", "").replace("class", "").replace("emoji", "")
+        rep = re.compile("lf\d+\w*|[<>/=]")
+        sign = rep.sub("", sign)
+        siglist.append(sign)
+    text = "".join(siglist)
+    wlist = jieba.cut(text, cut_all=True)
+    counts = {}
+    for word in wlist:
+        if len(word) == 1:
+            continue
+        else:
+            counts[word] = counts.get(word, 0) + 1
+    wdict = {}
+    i = 0
+    for d in counts.items():
+        if d[1] > 3:
+            wdict[d[0]] = d[1]
 
-plt.imshow(wc)
-plt.axis("off")
-plt.figure()
-plt.show()
-"""
+    drawWordcloudPlot(wdict)
+
 def main():
     friends = login()
     analyseGender(friends)
     analyseProvince(friends)
-    #analyseSingure(friends)
+    analyseSignature(friends)
 
 main()
