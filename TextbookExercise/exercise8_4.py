@@ -20,7 +20,7 @@ def calWordFreqencies():
     return counts
 
 def drawWordcloudPlot(counts):
-    coloring = np.array(Image.open("E:/baidupic/9.png"))
+    coloring = np.array(Image.open("E:/baidupic/alice_color.png"))
     wc = WordCloud(background_color="white",
                              max_words=2000,
                              mask=coloring,
