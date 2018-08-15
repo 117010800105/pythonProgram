@@ -17,3 +17,8 @@ TextbookExercise/novelStyleStas.py
 # dir: SingleProgram/
 SingleProgram/__pycache__/
 SingleProgram/.idea/
+
+# dir: InceptionV3Example/
+InceptionV3Example/.ipynb_checkpoints/
+InceptionV3Example/.idea
+InceptionV3Example/flower_photos
