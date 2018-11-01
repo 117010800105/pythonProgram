@@ -7,9 +7,21 @@ Created on Thu Nov  1 15:45:59 2018
 
 import tensorflow as tf
 import numpy as np
-import Utils
 from tensorflow.examples.tutorials.mnist import input_data
 import sklearn.preprocessing as prep
+
+def xavier_init(fan_in, fan_out, constant = 1):
+    """
+    目的是合理初始化权重。
+    参数：
+    fan_in --行数；
+    fan_out -- 列数；
+    constant --常数权重，条件初始化范围的倍数。
+    return 初始化后的权重tensor.
+    """
+    low = -constant * np.sqrt(6.0 / (fan_in + fan_out))
+    high = constant * np.sqrt(6.0 / (fan_in + fan_out))
+    return tf.random_uniform((fan_in, fan_out), minval = low, maxval = high, dtype = tf.float32)
 
 class AdditiveGaussianNoiseAutoencoder(object): 
     def __init__(self, n_input, n_hidden, transfer_function = tf.nn.softplus, optimizer = tf.train.AdamOptimizer(), scale = 0.1): 
@@ -29,7 +41,7 @@ class AdditiveGaussianNoiseAutoencoder(object):
         self.reconstruction = tf.add(tf.matmul(self.hidden, self.weights['w2']), self.weights['b2'])
 
         # cost
-        self.cost = 0.5 * tf.reduce_sum(tf.pow(tf.sub(self.reconstruction, self.x), 2.0))
+        self.cost = 0.5 * tf.reduce_sum(tf.pow(tf.subtract(self.reconstruction, self.x), 2.0))
         self.optimizer = optimizer.minimize(self.cost)
 
         init = tf.initialize_all_variables()
@@ -38,7 +50,7 @@ class AdditiveGaussianNoiseAutoencoder(object):
 
     def _initialize_weights(self):
         all_weights = dict()
-        all_weights['w1'] = tf.Variable(Utils.xavier_init(self.n_input, self.n_hidden))
+        all_weights['w1'] = tf.Variable(xavier_init(self.n_input, self.n_hidden))
         all_weights['b1'] = tf.Variable(tf.zeros([self.n_hidden], dtype = tf.float32))
         all_weights['w2'] = tf.Variable(tf.zeros([self.n_hidden, self.n_input], dtype = tf.float32))
         all_weights['b2'] = tf.Variable(tf.zeros([self.n_input], dtype = tf.float32))
@@ -77,7 +89,8 @@ class AdditiveGaussianNoiseAutoencoder(object):
         return self.sess.run(self.weights['b1'])
 
     
-mnist = input_data.read_data_sets('MNIST_data', one_hot = True)
+mnist = input_data.read_data_sets("E:/Repoes/pythonProgram/Tensor/mnist_data", one_hot=True)
+
 #定义一个对训练、测试数据进行标准化处理的函数。
 def standard_scale(X_train, X_test):
     preprocessor = prep.StandardScaler().fit(X_train)
@@ -95,11 +108,12 @@ n_samples = int(mnist.train.num_examples)
 training_epochs = 20
 batch_size = 128
 display_step = 1
-autoencoder = AdditiveGaussianNoiseAutoencoder(n_input = 784,
-n_hidden = 200,
+
+autoencoder = AdditiveGaussianNoiseAutoencoder(n_input = 784, n_hidden = 200,
 transfer_function =tf.nn.softplus,
 optimizer =tf.train.AdamOptimizer(learning_rate = 0.001),
 scale = 0.01)
+
 for epoch in range(training_epochs):
     avg_cost = 0.
     total_batch = int(n_samples / batch_size)
